@@ -15,7 +15,8 @@
 
 ### Changed
 
-- 暂无。
+- 按 `code/` 实际脚本与 `code/run.log` / `code/run.ipynb` 对齐 `README.md`、`CONTRIBUTING.md`、`SECURITY.md`、`CHANGELOG.md`、`LICENSE`。
+- `LICENSE` 版权主体更正为 Intelligent Transportation System SIG。
 
 ### Fixed
 
@@ -29,23 +30,23 @@
 
 ## [1.0.0] - 2026-07-21
 
-首次发布。本版本提供 Silent Inconsistency 论文配套的昇腾 NPU 实验代码、Alpaca 训练数据及社区文档。
+首次发布。本版本提供面向昇腾 NPU 的 Alpaca 全参数微调实验代码、诊断日志、训练数据及社区文档。
 
 ### Added
 
 - 新增基于 openPangu-Embedded-1B 的 Alpaca 全参数微调训练脚本（`code/run.py`、`code/train_v1.py`）。
 - 新增 HookedTrainer 与 DDP Communication Hook，用于在 All-Reduce 前采集各 Rank 本地 Loss 与梯度范数。
-- 新增 Per-Rank JSONL 诊断日志与 Rank0 聚合日志写入能力。
+- 新增 Per-Rank JSONL 诊断日志；在 `code/experiments/` 实验脚本中额外写入 Rank0 聚合日志（`loss_reduced` / `grad_norm_reduced`）。说明：`code/run.py` 当前仅启用 per-rank 日志。
 - 新增对照实验脚本：
-  - `code/experiments/S1-1.py`：严格一致性（统一随机种子）；
-  - `code/experiments/S1-2.py`：轻度失配（Rank0 使用不同种子）；
-  - `code/experiments/S1-3.py`：显著失配（各 Rank 使用不同种子）。
+  - `code/experiments/S1-1.py`：全 Rank `seed=42`；
+  - `code/experiments/S1-2.py`：Rank0 `seed=42+999`，其余 `seed=42`；
+  - `code/experiments/S1-3.py`：`seed=42+rank*10`。
 - 新增精度对照实验脚本：
-  - `code/experiments/S2-1.py`：FP32；
-  - `code/experiments/S2-2.py`：BF16。
+  - `code/experiments/S2-1.py`：FP32（`bf16=False`）；
+  - `code/experiments/S2-2.py`：BF16（`bf16=True`）。
 - 新增本地 Alpaca 训练数据 `data/train-00000-of-00001-a09b74b3ef9c3b56.parquet`。
 - 新增昇腾环境变量配置脚本 `code/fix.sh`。
-- 新增推理示例 `code/generate.ipynb`。
+- 新增推理示例 `code/generate.ipynb`、启动示例 `code/run.ipynb`、训练日志样例 `code/run.log`。
 - 新增稳定性相关脚本 `code/crash_test_v1.py`、`code/crash_test_v2.py`。
 - 新增项目说明 `README.md`。
 - 新增贡献指南 `CONTRIBUTING.md`。
@@ -76,11 +77,12 @@
 
 ### 已知限制
 
-- 部分训练脚本仍使用硬编码绝对路径，换环境部署前需手动修改。
+- 部分训练脚本仍使用硬编码绝对路径，换环境部署前需手动修改 `model_path` / `data_path` / `output_path`。
 - 当前未提供统一的 `requirements.txt`。
-- `crash_test_v1.py` 中测试集路径存在拼写问题，可能无法直接运行。
-- README 中提到的 Gradient-Direction Consistency（梯度方向余弦相似度）为论文诊断指标说明；当前训练脚本主要记录 Loss 与梯度范数日志，未实现该指标的在线计算。
-- README 中 S1-1 所述 Deterministic `DistributedSampler` 在当前脚本中未显式使用；S1-2 / S1-3 虽导入 `DistributedSampler`，但未在代码中实际调用。
+- `crash_test_v1.py` 中测试集路径存在 `.parquet.parquet` 拼写问题，且 `data_files` 键与 `ds[...]` 访问可能不一致，可能无法直接运行。
+- 当前训练脚本主要记录 Loss 与梯度范数 JSONL，**未实现**梯度方向余弦相似度的在线计算。
+- S1-2 / S1-3 虽导入 `DistributedSampler`，但未在代码中实际调用；实验差异主要来自 `set_seed` / `torch.manual_seed`，`TrainingArguments.seed` / `data_seed` 仍为 42。
+- `code/run.py` 使用训练子集 1000 条，且未接入 Rank0 聚合 logger。
 
 ---
 

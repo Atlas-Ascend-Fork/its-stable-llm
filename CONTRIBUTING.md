@@ -3,8 +3,8 @@
 感谢你对 its-stable-llm 的关注与贡献。本仓库主要内容包括：
 
 - 基于 openPangu-Embedded-1B 的 Alpaca 全参数微调脚本；
-- 三组对照实验：S1-1（严格一致）、S1-2（轻度失配）、S1-3（显著失配）；
-- 训练过程中记录各 Rank 的 Loss 与梯度范数日志；
+- 对照实验：S1-1 / S1-2 / S1-3（随机种子策略）、S2-1 / S2-2（FP32 / BF16）；
+- 训练过程中记录各 Rank 的 Loss 与梯度范数 JSONL 日志；
 - Alpaca 训练数据（Parquet）。
 
 为保证代码质量、实验结果可复现以及社区协作效率，请在提交 Issue 或 Pull Request（PR）前阅读本指南。
@@ -208,10 +208,19 @@ PR 描述至少应包含：
 当前主要目录约定：
 
 ```text
-code/                 训练与实验脚本
-code/experiments/     S1-1 / S1-2 / S1-3 / S2-1 / S2-2 实验入口
-data/                 Alpaca Parquet 训练数据
+code/                 训练与实验脚本（含 fix.sh、run.py、run.ipynb、run.log）
+code/experiments/     S1-1 / S1-2 / S1-3 / S2-1 / S2-2 及 experiments/run.py
+data/                 Alpaca Parquet 训练数据（脚本内路径需改为本机路径）
 ```
+
+实验种子策略以代码为准，并与 README 保持一致：
+
+- `S1-1.py`：全 Rank `seed=42`
+- `S1-2.py`：Rank0 `seed=42+999`，其余 `seed=42`
+- `S1-3.py`：`seed=42+rank*10`
+- `S2-1.py` / `S2-2.py`：精度对照（FP32 / BF16）；`TrainingArguments.seed` / `data_seed` 均为 42
+
+说明：S1 差异主要来自 `set_seed` / `torch.manual_seed`；当前未显式使用 `DistributedSampler`。
 
 ## 6. 测试要求
 
@@ -256,10 +265,11 @@ torchrun --nproc_per_node=8 --master_addr=localhost --master_port=12355 experime
 
 涉及实验脚本或诊断日志改动时，应至少验证：
 
-- S1-1 / S1-2 / S1-3 的随机种子策略仍符合 README 描述；
-- DDP Comm Hook 可正常注册（如有训练日志，可见 hook registered 相关输出）；
+- S1-1 / S1-2 / S1-3 的随机种子策略仍符合 README 与代码实现（见上文）；
+- DDP Comm Hook 可正常注册（参考 `code/run.log` 中 `DDP comm hook registered`）；
 - Per-Rank 日志字段（如 `loss_local`、`grad_norm_pre_ar`）可正常写入；
-- Rank0 聚合日志字段（如 `loss_reduced`、`grad_norm_reduced`）含义清晰；
+- 对 `code/experiments/` 脚本：Rank0 聚合日志字段（如 `loss_reduced`、`grad_norm_reduced`）含义清晰；
+  （`code/run.py` 当前仅写 per-rank 日志，未接入 Rank0 聚合 logger）
 - 数据预处理中 Response-only Loss Mask 行为正确。
 
 无 NPU 环境时，至少完成语法检查、静态代码审查，并在 PR 中标明未执行端到端训练。
