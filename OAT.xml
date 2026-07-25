@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (c) 2026 Huawei Technologies Co., Ltd.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+Notes:
+This is the project config file for OSS Audit Tool (OAT).
+Root LICENSE remains Apache License 2.0.
+-->
+<!--
+OAT configuration notes:
+- policyitem type "license" / "copyright" check source headers under path.
+- filefilter excludes formats that cannot carry comment headers (json/parquet/csv/log/binary).
+- Do not embed full copyright owner text into the license template itself; keep license and copyright checks separate.
+-->
+<configuration>
+    <oatconfig>
+        <licensefile></licensefile>
+        <policylist>
+            <policy name="projectPolicy" desc="its-stable-llm Apache-2.0 project policy">
+                <policyitem type="compatibility" name="Apache-2.0" path=".*" desc="Project root LICENSE is Apache License 2.0"/>
+                <policyitem type="license" name="Apache-2.0" path=".*" rule="may" group="licenseGroup" filefilter="licenseHeaderPolicyFilter" desc="Source files should declare Apache-2.0 in header"/>
+                <policyitem type="copyright" name="Huawei Technologies Co., Ltd." path=".*" rule="may" group="copyrightGroup" filefilter="copyrightPolicyFilter" desc="Source files should contain Copyright header"/>
+                <policyitem type="filename" name="LICENSE" path="projectroot" desc="Root LICENSE file is required"/>
+                <policyitem type="filename" name="README.md" path="projectroot" desc="Root README.md is required"/>
+                <policyitem type="filetype" name="binary" path=".*" filefilter="binaryFileTypePolicyFilter" desc="Binary files should be reviewed or filtered"/>
+            </policy>
+        </policylist>
+
+        <filefilterlist>
+            <filefilter name="defaultFilter" desc="Files not to check by default">
+                <filteritem type="filename" name="*.json|*.parquet|*.csv|*.log|*.png|*.jpg|*.jpeg|*.gif|*.svg|*.iml|*.pyc" desc="Data, logs, images and generated files"/>
+                <filteritem type="filepath" name=".git/.*" desc="Git metadata"/>
+                <filteritem type="filepath" name=".venv/.*" desc="Python virtualenv"/>
+                <filteritem type="filepath" name="__pycache__/.*" desc="Python cache"/>
+                <filteritem type="filepath" name="outputs?/.*" desc="Training outputs"/>
+                <filteritem type="filepath" name=".*/logs?/.*" desc="Runtime logs"/>
+            </filefilter>
+
+            <filefilter name="copyrightPolicyFilter" desc="Files excluded from copyright header check">
+                <filteritem type="filename" name="LICENSE|*.json|*.parquet|*.csv|*.log|*.png|*.jpg|*.jpeg|*.gif|*.svg|*.pyc" desc="Cannot or should not carry copyright comment headers"/>
+                <filteritem type="filepath" name="data/.*" desc="Dataset files"/>
+                <filteritem type="filepath" name="code/fusion_result.json" desc="JSON result file"/>
+                <filteritem type="filepath" name="code/run.log" desc="Training log sample"/>
+            </filefilter>
+
+            <filefilter name="licenseHeaderPolicyFilter" desc="Files excluded from license header check">
+                <filteritem type="filename" name="LICENSE|*.json|*.parquet|*.csv|*.log|*.png|*.jpg|*.jpeg|*.gif|*.svg|*.pyc" desc="Cannot or should not carry license comment headers"/>
+                <filteritem type="filepath" name="data/.*" desc="Dataset files"/>
+                <filteritem type="filepath" name="code/fusion_result.json" desc="JSON result file"/>
+                <filteritem type="filepath" name="code/run.log" desc="Training log sample"/>
+            </filefilter>
+
+            <filefilter name="binaryFileTypePolicyFilter" desc="Allowed or reviewed binary-like files">
+                <filteritem type="filepath" name="data/.*\\.parquet" desc="Alpaca training dataset in Parquet format"/>
+            </filefilter>
+        </filefilterlist>
+    </oatconfig>
+</configuration>

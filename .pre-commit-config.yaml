@@ -1,0 +1,54 @@
+# Copyright (c) 2026 Huawei Technologies Co., Ltd.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Pre-commit hooks for its-stable-llm
+# Reference style: https://gitcode.com/cann/ops-nn/blob/master/.pre-commit-config.yaml
+# Adapted for this Python training repo (Apache-2.0 LICENSE kept).
+
+minimum_pre_commit_version: 4.0.0
+exclude: ^LICENSE$|\.(csv|json|parquet|log|png|jpg|jpeg|gif|svg)$
+
+default_stages: [pre-commit]
+ci:
+  autofix_prs: false
+  autoupdate_schedule: monthly
+
+repos:
+  - repo: https://gitcode.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace
+        exclude: \.(md|ipynb)$
+      - id: end-of-file-fixer
+        exclude: \.ipynb$
+      - id: check-yaml
+        args: ["--allow-multiple-documents"]
+      - id: check-added-large-files
+        args: ["--maxkb=5120"]
+      - id: check-merge-conflict
+      - id: detect-private-key
+      - id: check-json
+        exclude: ^code/fusion_result\.json$
+
+  # OAT / copyright-license header check
+  - repo: local
+    hooks:
+      - id: oat-check
+        name: OAT Compliance Check
+        entry: bash scripts/oat_check.sh
+        language: system
+        pass_filenames: false
+        types: [file]
+        stages: [pre-commit]
+        verbose: true

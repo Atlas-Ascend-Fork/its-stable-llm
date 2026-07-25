@@ -1,3 +1,19 @@
+<!--
+Copyright (c) 2026 Huawei Technologies Co., Ltd.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
 # Changelog
 
 本文档记录 its-stable-llm 的重要变更。
@@ -11,7 +27,10 @@
 
 ### Added
 
-- 暂无。
+- 新增 `OAT.xml`，配置 Apache-2.0 许可证与 Copyright 扫描策略，并排除 json/parquet/csv/log 等无法添加文件头的类型。
+- 新增 `.pre-commit-config.yaml` 与 `scripts/oat_check.sh`，用于提交前合规检查。
+- 为可注释源文件补充 Apache-2.0 Copyright / License 文件头（保留根目录 Apache-2.0 `LICENSE` 不变）。
+- 新增 `.gitignore`。
 
 ### Changed
 

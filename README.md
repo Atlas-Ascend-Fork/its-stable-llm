@@ -1,3 +1,19 @@
+<!--
+Copyright (c) 2026 Huawei Technologies Co., Ltd.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
 # its-stable-llm
 
 its-stable-llm 是 [CANN 社区 Intelligent Transportation System SIG](https://gitcode.com/cann/community/blob/master/CANN/sigs/intelligent-transportation-system/README.md) 旗下的大模型训练稳定性分析示例仓，面向昇腾 NPU，提供基于 openPangu-Embedded-1B 的 Alpaca 全参数微调脚本、多卡 DDP 对照实验，以及 Rank 级 Loss / 梯度范数诊断日志能力。
@@ -142,6 +158,12 @@ its-stable-llm/
 ├── CONTRIBUTING.md
 ├── SECURITY.md
 ├── CHANGELOG.md
+├── OAT.xml                    # 开源合规扫描配置（Apache-2.0）
+├── .pre-commit-config.yaml    # 提交前检查（含 oat-check）
+├── .gitignore
+├── scripts/
+│   ├── oat_check.sh           # 本地 OAT / 文件头合规检查
+│   └── add_copyright_headers.py
 ├── code/
 │   ├── fix.sh                 # 昇腾 / CANN 环境变量示例（需改本机路径）
 │   ├── run.py                 # 主训练脚本（HookedTrainer；子集 1000 条；仅 per-rank JSONL）

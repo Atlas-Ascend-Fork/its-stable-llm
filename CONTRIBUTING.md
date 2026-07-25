@@ -1,3 +1,19 @@
+<!--
+Copyright (c) 2026 Huawei Technologies Co., Ltd.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
 # Contributing to its-stable-llm
 
 感谢你对 its-stable-llm 的关注与贡献。本仓库主要内容包括：
@@ -193,6 +209,7 @@ PR 描述至少应包含：
 - 新增异常应提供明确的错误信息；
 - 不得静默忽略可能影响训练结果或诊断日志正确性的错误；
 - 不得在源码中写入账号、密码、Token、私钥或内部网络地址。
+- 新增或修改可注释源文件时，应保留 / 补充仓库统一的 Apache-2.0 Copyright 文件头（与根目录 `LICENSE` 一致）；`json` / `csv` / `parquet` / 日志等无法添加注释的文件除外。合规检查见根目录 `OAT.xml` 与 `scripts/oat_check.sh`。
 
 ### 5.2 实验脚本与数据
 
