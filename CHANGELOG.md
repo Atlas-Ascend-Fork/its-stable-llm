@@ -1,5 +1,5 @@
 <!--
-Copyright (c) 2026 Huawei Technologies Co., Ltd.
+Copyright (c) 2026 Southeast University
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -29,8 +29,9 @@ limitations under the License.
 
 - 新增 `OAT.xml`，配置 Apache-2.0 许可证与 Copyright 扫描策略，并排除 json/parquet/csv/log 等无法添加文件头的类型。
 - 新增 `.pre-commit-config.yaml` 与 `scripts/oat_check.sh`，用于提交前合规检查。
-- 为可注释源文件补充 Apache-2.0 Copyright / License 文件头（保留根目录 Apache-2.0 `LICENSE` 不变）。
+- 为可注释源文件补充 Apache-2.0 Copyright / License 文件头（版权主体为 Southeast University / 东南大学；保留根目录 Apache-2.0 `LICENSE` 不变）。
 - 新增 `.gitignore`。
+- 将文件头与 `OAT.xml` 中的版权主体由模板中的华为名称更正为 Southeast University。
 
 ### Changed
 

@@ -1,4 +1,4 @@
-# Copyright (c) 2026 Huawei Technologies Co., Ltd.
+# Copyright (c) 2026 Southeast University
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
-HASH_HEADER = """# Copyright (c) 2026 Huawei Technologies Co., Ltd.
+HASH_HEADER = """# Copyright (c) 2026 Southeast University
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@ HASH_HEADER = """# Copyright (c) 2026 Huawei Technologies Co., Ltd.
 """
 
 XML_HEADER = """<!--
-Copyright (c) 2026 Huawei Technologies Co., Ltd.
+Copyright (c) 2026 Southeast University
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -54,7 +54,7 @@ limitations under the License.
 """
 
 MD_HEADER = """<!--
-Copyright (c) 2026 Huawei Technologies Co., Ltd.
+Copyright (c) 2026 Southeast University
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -71,7 +71,7 @@ limitations under the License.
 """
 
 NB_SOURCE = [
-    "# Copyright (c) 2026 Huawei Technologies Co., Ltd.\n",
+    "# Copyright (c) 2026 Southeast University\n",
     "#\n",
     '# Licensed under the Apache License, Version 2.0 (the "License");\n',
     "# you may not use this file except in compliance with the License.\n",
