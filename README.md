@@ -256,7 +256,7 @@ S1 / S2 实验脚本均启用 per-rank JSONL 与 Rank0 聚合 JSONL（`loss_redu
 
 ## 许可证
 
-本项目基于 [Apache License 2.0](LICENSE) 开源。
+本项目基于 [LICENSE]开源。
 
 ---
 
