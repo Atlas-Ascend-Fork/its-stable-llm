@@ -1,37 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-Copyright (c) 2026 Southeast University
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
-Notes:
-This is the project config file for OSS Audit Tool (OAT).
-Root LICENSE remains Apache License 2.0.
+<!--    Copyright (c) 2026 Southeast University
+        This program is free software, you can redistribute it and/or modify it under the terms and conditions of
+        CANN Open Software License Agreement Version 2.0 (the "License").
+        Please refer to the License for details. You may not use this file except in compliance with the License.
+        THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED,
+        INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY, OR FITNESS FOR A PARTICULAR PURPOSE.
+        See LICENSE in the root of the software repository for the full text of the License.
 -->
-<!--
-OAT configuration notes:
-- policyitem type "license" / "copyright" check source headers under path.
-- filefilter excludes formats that cannot carry comment headers (json/parquet/csv/log/binary).
-- Do not embed full copyright owner text into the license template itself; keep license and copyright checks separate.
--->
+
 <configuration>
     <oatconfig>
         <licensefile></licensefile>
         <policylist>
-            <policy name="projectPolicy" desc="its-stable-llm Apache-2.0 project policy">
-                <policyitem type="compatibility" name="Apache-2.0" path=".*" desc="Project root LICENSE is Apache License 2.0"/>
-                <policyitem type="license" name="Apache-2.0" path=".*" rule="may" group="licenseGroup" filefilter="licenseHeaderPolicyFilter" desc="Source files should declare Apache-2.0 in header"/>
-                <policyitem type="copyright" name="Southeast University" path=".*" rule="may" group="copyrightGroup" filefilter="copyrightPolicyFilter" desc="Source files should contain Copyright header"/>
+            <policy name="projectPolicy" desc="its-stable-llm CANN-2.0 project policy">
+                <policyitem type="license" name="CANN-2.0" path=".*" desc="Source files should declare CANN Open Software License Agreement Version 2.0"/>
+                <policyitem type="copyright" name="Southeast University" path=".*" rule="may" group="defaultGroup" filefilter="copyrightPolicyFilter" desc="Source files should contain Copyright header"/>
                 <policyitem type="filename" name="LICENSE" path="projectroot" desc="Root LICENSE file is required"/>
                 <policyitem type="filename" name="README.md" path="projectroot" desc="Root README.md is required"/>
                 <policyitem type="filetype" name="binary" path=".*" filefilter="binaryFileTypePolicyFilter" desc="Binary files should be reviewed or filtered"/>
@@ -48,23 +31,42 @@ OAT configuration notes:
                 <filteritem type="filepath" name=".*/logs?/.*" desc="Runtime logs"/>
             </filefilter>
 
-            <filefilter name="copyrightPolicyFilter" desc="Files excluded from copyright header check">
+            <filefilter name="defaultPolicyFilter" desc="Filters for compatibility and license header policies">
+                <filteritem type="filename" name="LICENSE|*.json|*.parquet|*.csv|*.log|*.png|*.jpg|*.jpeg|*.gif|*.svg|*.pyc|*.yaml|*.yml" desc="Cannot or should not carry license comment headers"/>
+                <filteritem type="filepath" name="data/.*" desc="Dataset files"/>
+                <filteritem type="filepath" name="code/fusion_result.json" desc="JSON result file"/>
+                <filteritem type="filepath" name="code/run.log" desc="Training log sample"/>
+            </filefilter>
+
+            <filefilter name="copyrightPolicyFilter" desc="Filters for copyright header policies">
                 <filteritem type="filename" name="LICENSE|*.json|*.parquet|*.csv|*.log|*.png|*.jpg|*.jpeg|*.gif|*.svg|*.pyc" desc="Cannot or should not carry copyright comment headers"/>
                 <filteritem type="filepath" name="data/.*" desc="Dataset files"/>
                 <filteritem type="filepath" name="code/fusion_result.json" desc="JSON result file"/>
                 <filteritem type="filepath" name="code/run.log" desc="Training log sample"/>
             </filefilter>
 
-            <filefilter name="licenseHeaderPolicyFilter" desc="Files excluded from license header check">
-                <filteritem type="filename" name="LICENSE|*.json|*.parquet|*.csv|*.log|*.png|*.jpg|*.jpeg|*.gif|*.svg|*.pyc" desc="Cannot or should not carry license comment headers"/>
-                <filteritem type="filepath" name="data/.*" desc="Dataset files"/>
-                <filteritem type="filepath" name="code/fusion_result.json" desc="JSON result file"/>
-                <filteritem type="filepath" name="code/run.log" desc="Training log sample"/>
+            <filefilter name="licenseFileNamePolicyFilter" desc="Filters for LICENSE file policies">
             </filefilter>
-
+            <filefilter name="readmeFileNamePolicyFilter" desc="Filters for README file policies">
+            </filefilter>
+            <filefilter name="readmeOpenSourcefileNamePolicyFilter" desc="Filters for README.OpenSource file policies">
+            </filefilter>
             <filefilter name="binaryFileTypePolicyFilter" desc="Allowed or reviewed binary-like files">
                 <filteritem type="filepath" name="data/.*\\.parquet" desc="Alpaca training dataset in Parquet format"/>
             </filefilter>
         </filefilterlist>
+
+        <licensematcherlist>
+            <licensematcher name="cann License" desc="If the scanning result is InvalidLicense, you can define matching rules here. Note that quotation marks must be escaped.">
+                <licensetext name="
+                    This program is free software, you can redistribute it and/or modify it under the terms and conditions of
+                    CANN Open Software License Agreement Version 2.0 (the "License").
+                    Please refer to the License for details. You may not use this file except in compliance with the License.
+                    THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED,
+                    INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY, OR FITNESS FOR A PARTICULAR PURPOSE.
+                    See LICENSE in the root of the software repository for the full text of the License.
+				 " desc=""/>
+            </licensematcher>
+        </licensematcherlist>
     </oatconfig>
 </configuration>

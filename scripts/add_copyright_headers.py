@@ -1,18 +1,12 @@
 # Copyright (c) 2026 Southeast University
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+# This program is free software, you can redistribute it and/or modify it under the terms and conditions of
+# CANN Open Software License Agreement Version 2.0 (the "License").
+# Please refer to the License for details. You may not use this file except in compliance with the License.
+# THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED,
+# INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY, OR FITNESS FOR A PARTICULAR PURPOSE.
+# See LICENSE in the root of the software repository for the full text of the License.
 
-"""Add Apache-2.0 copyright headers to source files that support comments."""
+"""Add CANN-2.0 copyright headers to source files that support comments."""
 
 from __future__ import annotations
 
@@ -22,77 +16,36 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
 HASH_HEADER = """# Copyright (c) 2026 Southeast University
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+# This program is free software, you can redistribute it and/or modify it under the terms and conditions of
+# CANN Open Software License Agreement Version 2.0 (the "License").
+# Please refer to the License for details. You may not use this file except in compliance with the License.
+# THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED,
+# INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY, OR FITNESS FOR A PARTICULAR PURPOSE.
+# See LICENSE in the root of the software repository for the full text of the License.
 """
 
 XML_HEADER = """<!--
 Copyright (c) 2026 Southeast University
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+This program is free software, you can redistribute it and/or modify it under the terms and conditions of
+CANN Open Software License Agreement Version 2.0 (the "License").
+Please refer to the License for details. You may not use this file except in compliance with the License.
+THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY, OR FITNESS FOR A PARTICULAR PURPOSE.
+See LICENSE in the root of the software repository for the full text of the License.
 -->
 """
 
-MD_HEADER = """<!--
-Copyright (c) 2026 Southeast University
+MD_HEADER = XML_HEADER
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
--->
-"""
-
-NB_SOURCE = [
-    "# Copyright (c) 2026 Southeast University\n",
-    "#\n",
-    '# Licensed under the Apache License, Version 2.0 (the "License");\n',
-    "# you may not use this file except in compliance with the License.\n",
-    "# You may obtain a copy of the License at\n",
-    "#\n",
-    "#     http://www.apache.org/licenses/LICENSE-2.0\n",
-    "#\n",
-    "# Unless required by applicable law or agreed to in writing, software\n",
-    '# distributed under the License is distributed on an "AS IS" BASIS,\n',
-    "# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n",
-    "# See the License for the specific language governing permissions and\n",
-    "# limitations under the License.\n",
-]
+NB_SOURCE = [line + "\n" for line in HASH_HEADER.strip("\n").split("\n")]
 
 SKIP_SUFFIXES = {".json", ".parquet", ".log", ".csv", ".png", ".jpg", ".jpeg", ".gif", ".svg"}
 SKIP_NAMES = {"LICENSE", "add_copyright_headers.py"}
 
 
 def already_has_copyright(text: str) -> bool:
-    head = text[:800]
-    return "Copyright (c)" in head or "Licensed under the Apache License" in head
+    head = text[:1200]
+    return "Copyright (c)" in head and "CANN Open Software License Agreement Version 2.0" in head
 
 
 def add_hash_style(path: Path) -> bool:
@@ -133,11 +86,8 @@ def add_notebook(path: Path) -> bool:
     if cells:
         first = cells[0]
         src = first.get("source", [])
-        if isinstance(src, str):
-            joined = src
-        else:
-            joined = "".join(src)
-        if "Copyright (c)" in joined[:500]:
+        joined = src if isinstance(src, str) else "".join(src)
+        if "CANN Open Software License Agreement Version 2.0" in joined[:800]:
             return False
     copyright_cell = {
         "cell_type": "code",
@@ -160,7 +110,6 @@ def main() -> None:
             continue
         if path.name in SKIP_NAMES or path.suffix.lower() in SKIP_SUFFIXES:
             continue
-        # skip this helper once placed under scripts/
         if path.resolve() == Path(__file__).resolve():
             continue
 

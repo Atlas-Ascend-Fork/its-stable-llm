@@ -1,17 +1,11 @@
 <!--
 Copyright (c) 2026 Southeast University
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+This program is free software, you can redistribute it and/or modify it under the terms and conditions of
+CANN Open Software License Agreement Version 2.0 (the "License").
+Please refer to the License for details. You may not use this file except in compliance with the License.
+THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY, OR FITNESS FOR A PARTICULAR PURPOSE.
+See LICENSE in the root of the software repository for the full text of the License.
 -->
 
 # its-stable-llm
@@ -158,7 +152,7 @@ its-stable-llm/
 ├── CONTRIBUTING.md
 ├── SECURITY.md
 ├── CHANGELOG.md
-├── OAT.xml                    # 开源合规扫描配置（Apache-2.0）
+├── OAT.xml                    # 开源合规扫描配置（CANN-2.0）
 ├── .pre-commit-config.yaml    # 提交前检查（含 oat-check）
 ├── .gitignore
 ├── scripts/
@@ -256,7 +250,7 @@ S1 / S2 实验脚本均启用 per-rank JSONL 与 Rank0 聚合 JSONL（`loss_redu
 
 ## 许可证
 
-本项目基于 [LICENSE](LICENSE)开源。
+本项目基于 [CANN Open Software License Agreement Version 2.0](LICENSE) 开源。
 
 ---
 

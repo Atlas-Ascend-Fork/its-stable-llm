@@ -1,17 +1,11 @@
 <!--
 Copyright (c) 2026 Southeast University
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+This program is free software, you can redistribute it and/or modify it under the terms and conditions of
+CANN Open Software License Agreement Version 2.0 (the "License").
+Please refer to the License for details. You may not use this file except in compliance with the License.
+THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY, OR FITNESS FOR A PARTICULAR PURPOSE.
+See LICENSE in the root of the software repository for the full text of the License.
 -->
 
 # Changelog
@@ -27,16 +21,16 @@ limitations under the License.
 
 ### Added
 
-- 新增 `OAT.xml`，配置 Apache-2.0 许可证与 Copyright 扫描策略，并排除 json/parquet/csv/log 等无法添加文件头的类型。
-- 新增 `.pre-commit-config.yaml` 与 `scripts/oat_check.sh`，用于提交前合规检查。
-- 为可注释源文件补充 Apache-2.0 Copyright / License 文件头（版权主体为 Southeast University / 东南大学；保留根目录 Apache-2.0 `LICENSE` 不变）。
+- 新增 `OAT.xml`，配置 CANN-2.0 许可证与 Copyright 扫描策略（参考 ops-nn），并排除 json/parquet/csv/log 等无法添加文件头的类型。
+- 新增 `.pre-commit-config.yaml` 与 `scripts/oat_check.sh`，用于提交前合规检查（参考 ops-nn）。
+- 为可注释源文件补充 CANN Open Software License Agreement Version 2.0 Copyright / License 文件头（版权主体为 Southeast University）。
 - 新增 `.gitignore`。
-- 将文件头与 `OAT.xml` 中的版权主体由模板中的华为名称更正为 Southeast University。
 
 ### Changed
 
+- 根目录 `LICENSE` 由 Apache License 2.0 切换为 CANN Open Software License Agreement Version 2.0。
+- 文件头与 `OAT.xml` 版权主体确认为 Southeast University（东南大学）。
 - 按 `code/` 实际脚本与 `code/run.log` / `code/run.ipynb` 对齐 `README.md`、`CONTRIBUTING.md`、`SECURITY.md`、`CHANGELOG.md`、`LICENSE`。
-- `LICENSE` 版权主体更正为 Intelligent Transportation System SIG。
 
 ### Fixed
 
@@ -71,7 +65,7 @@ limitations under the License.
 - 新增项目说明 `README.md`。
 - 新增贡献指南 `CONTRIBUTING.md`。
 - 新增安全策略 `SECURITY.md`。
-- 新增 Apache License 2.0 许可证文件 `LICENSE`。
+- 新增许可证文件 `LICENSE`（首版为 Apache License 2.0；后续在 Unreleased 切换为 CANN-2.0）。
 
 ### Changed
 
