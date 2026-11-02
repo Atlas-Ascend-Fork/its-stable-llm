@@ -116,4 +116,4 @@ if trainer.args.local_rank in [-1, 0]:
     tokenizer.save_pretrained(os.path.join(output_path, "final_model"))
 
 print("训练完成！")
-print(f"日志文件保存在: {log_dir}")
+print(f"训练产物与日志已保存到: {output_path}")
